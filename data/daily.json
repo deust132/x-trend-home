@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-05",
+  "updatedAt": "2026-10-05T08:00:00+09:00",
+  "items": [
+    {
+      "id": "2026-10-05-001",
+      "title": "오픈소스 멀티모달 모델, 소형 GPU에서도 실시간 추론 시연",
+      "summary": "8B급 멀티모달 모델을 양자화해 소비자용 GPU 한 장에서 초당 30토큰 이상으로 돌리는 데모가 공유됐다. 로컬 에이전트 수요와 맞물려 반응이 컸다.",
+      "author": { "name": "김예시", "handle": "@example_ai" },
+      "likes": 4820,
+      "url": "https://x.com/example_ai/status/1000000000000000001",
+      "category": "모델",
+      "source": "X"
+    },
+    {
+      "id": "2026-10-05-002",
+      "title": "코딩 에이전트로 레거시 코드 마이그레이션한 3주 회고",
+      "summary": "10만 줄 규모 서비스를 에이전트와 함께 새 프레임워크로 옮긴 경험담. 테스트를 먼저 보강해야 에이전트 결과를 믿을 수 있었다는 점을 강조했다.",
+      "author": { "name": "Jane Sample", "handle": "@janesample" },
+      "likes": 2315,
+      "url": "https://x.com/janesample/status/1000000000000000002",
+      "category": "개발 도구",
+      "source": "X"
+    },
+    {
+      "id": "2026-10-05-003",
+      "title": "EU, 범용 AI 모델 투명성 가이드라인 세부안 공개",
+      "summary": "학습 데이터 요약 공개 양식과 평가 보고 주기가 구체화됐다. 국내 기업도 유럽 서비스 시 참고해야 할 항목이 정리돼 있다.",
+      "author": { "name": "정책 브리핑 봇", "handle": "@policy_brief" },
+      "likes": 980,
+      "url": "https://example.com/news/eu-gpai-guideline",
+      "category": "정책·규제",
+      "source": "뉴스"
+    },
+    {
+      "id": "2026-10-05-004",
+      "title": "AI 영상 생성으로 1주일 만에 숏폼 채널 1만 구독 달성 사례",
+      "summary": "기획·대본·편집 단계를 나눠 각기 다른 도구로 자동화한 워크플로가 공개됐다. 제작 시간을 영상당 2시간에서 20분으로 줄였다고 한다.",
+      "author": { "name": "박샘플", "handle": "@sample_creator" },
+      "likes": 1764,
+      "url": "https://x.com/sample_creator/status/1000000000000000004",
+      "category": "활용 사례",
+      "source": "X"
+    }
+  ]
+}

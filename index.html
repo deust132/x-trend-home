@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>AI 트렌드 리포트</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <h1 class="brand">AI 트렌드 리포트</h1>
+      <p class="updated" id="updated-at" aria-live="polite"></p>
+    </div>
+    <nav class="wrap section-nav" aria-label="섹션 이동">
+      <a href="#report">오늘의 리포트</a>
+      <a href="#insights">인사이트</a>
+      <a href="#trends">트렌드</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section id="report" class="section" aria-labelledby="report-title">
+      <div class="section-head">
+        <h2 id="report-title">오늘의 리포트</h2>
+        <span class="section-meta" id="report-meta"></span>
+      </div>
+      <div id="report-list" class="card-grid" aria-busy="true">
+        <p class="state">불러오는 중…</p>
+      </div>
+    </section>
+
+    <section id="insights" class="section" aria-labelledby="insights-title">
+      <div class="section-head">
+        <h2 id="insights-title">인사이트</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="인사이트 기간">
+        <button type="button" role="tab" id="tab-daily" data-period="daily" aria-controls="insight-panel" aria-selected="true">데일리</button>
+        <button type="button" role="tab" id="tab-weekly" data-period="weekly" aria-controls="insight-panel" aria-selected="false" tabindex="-1">주간</button>
+        <button type="button" role="tab" id="tab-monthly" data-period="monthly" aria-controls="insight-panel" aria-selected="false" tabindex="-1">월간</button>
+      </div>
+      <div id="insight-panel" class="panel" role="tabpanel" aria-labelledby="tab-daily" tabindex="0">
+        <p class="state">불러오는 중…</p>
+      </div>
+    </section>
+
+    <section id="trends" class="section" aria-labelledby="trends-title">
+      <div class="section-head">
+        <h2 id="trends-title">트렌드</h2>
+        <span class="section-meta" id="trends-meta"></span>
+      </div>
+      <div id="trend-list" class="trend-list">
+        <p class="state">불러오는 중…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">데이터는 매일 <code>data/*.json</code>에서 갱신됩니다.</div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

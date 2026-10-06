@@ -140,6 +140,21 @@
       '<p class="insight-box__text">' + (marked || escapeHTML(text)) + "</p></aside>";
   }
 
+  // 북마크 이름 변경: customTitle이 있으면 그걸 보여 준다.
+  function displayTitle(it) {
+    var c = it && typeof it.customTitle === "string" ? it.customTitle.trim() : "";
+    return c || (it && it.title) || "";
+  }
+
+  // 검색 하이라이트와 함께 표시용 제목을 그린다.
+  function titleHTML(it, mark) {
+    var t = displayTitle(it);
+    if (!mark) return escapeHTML(t);
+    if (t === it.title) return mark(it, "title");
+    // 바꾼 이름에는 검색어를 직접 하이라이트한다.
+    return markRanges(t, matchRanges(t, queryTerms(String(reportView.query || "").trim()), null));
+  }
+
   // mark(item, field)가 주어지면 검색어 형광펜으로 그린다.
   function renderReports(items, mark) {
     var list = $("report-list");
@@ -157,7 +172,7 @@
       return '<li class="report' + (mediaOf(it).length ? " report--media" : "") + '" id="' + id + '" data-item="' + itemKey(it) + '"' + categoryStyle(it.category) + "><article>" +
           mediaHTML(it) +
           '<p class="report__meta">' + metaHTML(it, true) + "</p>" +
-          '<h3 class="report__title">' + (mark ? mark(it, "title") : escapeHTML(it.title)) + "</h3>" +
+          '<h3 class="report__title">' + titleHTML(it, mark) + "</h3>" +
           tagsHTML(it) +
           '<p class="report__summary">' + (mark ? mark(it, "summary") : highlightQuote(it.summary)) + "</p>" +
           insightHTML(it.insight, mark && it.insight ? mark(it, "insight") : "") +
@@ -167,6 +182,7 @@
               '<span class="fold-toggle__label">더보기</span><span class="visually-hidden"> — ' + escapeHTML(it.title) + "</span></button>" +
             likeButtonHTML(it) +
             saveButtonHTML(it) +
+            renameButtonHTML(it) +
             share.button +
             comments.button +
             '<a class="source-link" href="' + url + '" target="_blank" rel="noopener noreferrer">원문 ↗<span class="visually-hidden"> — ' +
@@ -605,7 +621,7 @@
   var KAKAO_JS_KEY = "";
   var KAKAO_SDK = "https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js";
 
-  function shareText(it) { return String(it.title || "") + " — 리서치 데스크"; }
+  function shareText(it) { return String(displayTitle(it) || "") + " — 리서치 데스크"; }
 
   function shareHTML(it, id) {
     var key = itemKey(it);
@@ -1729,6 +1745,18 @@
       '<span class="visually-hidden"> — ' + escapeHTML(it.title) + "</span></button>";
   }
 
+  // 북마크 보기에서만 보이는 이름 변경 버튼 (로그인 사용자)
+  function renameButtonHTML(it) {
+    if (reportView.view !== "bookmarks" || !account.user) return "";
+    var key = bookmarkKey(it && it.url);
+    if (!key) return "";
+    var renamed = !!(it.customTitle && String(it.customTitle).trim());
+    return '<button type="button" class="rename-toggle" data-url="' + escapeHTML(key) + '"' +
+      ' title="' + escapeHTML(renamed ? "원래 제목: " + it.title : "이 북마크의 이름을 바꿉니다") + '">' +
+      '<span aria-hidden="true">✏️</span>' +
+      '<span class="rename-toggle__label">' + (renamed ? "이름 변경됨" : "이름 변경") + "</span></button>";
+  }
+
   function paintSaveButtons(key) {
     var on = savedKeys.has(key);
     each(document.querySelectorAll(".save-toggle"), function (btn) {
@@ -1813,6 +1841,57 @@
     });
   }
 
+  // 북마크 이름 인라인 편집: 제목을 입력창으로 바꿔 저장·취소·되돌리기를 제공한다.
+  function startRename(btn) {
+    if (!account.user) { goLogin(); return; }
+    var key = btn.getAttribute("data-url");
+    var item = findItem(key);
+    if (!item) return;
+    var card = btn.closest ? btn.closest("article") : null;
+    var h3 = card ? card.querySelector(".report__title") : null;
+    if (!h3 || h3.querySelector(".rename-editor")) return;
+    var renamed = !!(item.customTitle && String(item.customTitle).trim());
+    h3.innerHTML =
+      '<span class="rename-editor">' +
+      '<input type="text" class="rename-editor__input" maxlength="300" aria-label="북마크 이름" value="' + escapeHTML(displayTitle(item)) + '">' +
+      '<button type="button" class="rename-editor__save">저장</button>' +
+      '<button type="button" class="rename-editor__cancel">취소</button>' +
+      (renamed ? '<button type="button" class="rename-editor__revert">원본으로 되돌리기</button>' : "") +
+      "</span>";
+    var input = h3.querySelector(".rename-editor__input");
+    input.focus();
+    try { input.select(); } catch (e) { /* 무시 */ }
+    function cancel() { applyReportView(); }
+    h3.querySelector(".rename-editor__save").addEventListener("click", function () { saveRename(key, input.value, btn); });
+    h3.querySelector(".rename-editor__cancel").addEventListener("click", cancel);
+    var revert = h3.querySelector(".rename-editor__revert");
+    if (revert) revert.addEventListener("click", function () { saveRename(key, "", btn); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); saveRename(key, input.value, btn); }
+      else if (e.key === "Escape") { e.preventDefault(); cancel(); }
+    });
+  }
+
+  function saveRename(key, value, btn) {
+    var v = String(value == null ? "" : value).trim().slice(0, 300);
+    btn.disabled = true;
+    apiJSON(BOOKMARKS_API, "PATCH", { url: key, customTitle: v }).then(function (data) {
+      if (data && data.item) {
+        var list = reportView.sets.bookmarks;
+        for (var i = 0; i < list.length; i++) {
+          if (bookmarkKey(list[i].url) === key) { list[i] = data.item; break; }
+        }
+      }
+      showNotice("");
+      applyReportView();
+      toast(v ? "북마크 이름을 바꿨습니다." : "원래 제목으로 되돌렸습니다.");
+    }, function (err) {
+      btn.disabled = false;
+      if (err.status === 401) signedOut("로그인이 만료됐습니다. 다시 로그인해 주세요.");
+      else showNotice("이름을 바꾸지 못했습니다: " + err.message);
+    });
+  }
+
   function logout(btn) {
     btn.disabled = true;
     apiJSON(AUTH_LOGOUT, "POST", {}).then(function () {
@@ -1839,7 +1918,9 @@
     });
     document.addEventListener("click", function (e) {
       var btn = e.target.closest ? e.target.closest(".save-toggle") : null;
-      if (btn) toggleSave(btn);
+      if (btn) { toggleSave(btn); return; }
+      var rn = e.target.closest ? e.target.closest(".rename-toggle") : null;
+      if (rn) { startRename(rn); return; }
     });
   }
 

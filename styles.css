@@ -363,6 +363,28 @@ h5.detail__heading { font-size: 0.95rem; border-left-width: 3px; }
 .save-toggle[aria-pressed="true"] { background: var(--stamp-soft); border-color: var(--stamp); color: var(--stamp); }
 .save-toggle[aria-busy="true"] { opacity: 0.6; }
 .save-toggle__icon { font-size: 1rem; line-height: 1; }
+
+/* 북마크 이름 변경 */
+.rename-toggle {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 12px;
+  border: 1px solid var(--rule); border-radius: 999px; background: transparent;
+  font-size: 0.85rem; font-weight: 700; color: var(--graphite); cursor: pointer;
+}
+.rename-toggle:hover { border-color: var(--stamp); color: var(--stamp); }
+.rename-toggle:disabled { opacity: 0.6; cursor: default; }
+.rename-editor { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; }
+.rename-editor__input {
+  flex: 1 1 180px; min-height: 40px; padding: 0 12px;
+  border: 1px solid var(--stamp); border-radius: 10px; background: #fff;
+  font: inherit; font-size: 1rem; color: var(--ink);
+}
+.rename-editor__save, .rename-editor__cancel, .rename-editor__revert {
+  min-height: 40px; padding: 0 14px; border-radius: 10px; cursor: pointer;
+  font-size: 0.85rem; font-weight: 700;
+}
+.rename-editor__save { border: 0; background: var(--stamp); color: #fff; }
+.rename-editor__cancel { border: 1px solid var(--rule); background: #fff; color: var(--graphite); }
+.rename-editor__revert { border: 1px dashed var(--rule); background: transparent; color: var(--graphite); }
 .source-link {
   margin-left: auto; display: inline-flex; align-items: center; min-height: 36px;
   font-size: 0.85rem; font-weight: 700; color: var(--stamp); text-decoration: none;

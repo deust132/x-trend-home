@@ -1,6 +1,7 @@
 /* 내 북마크 — /api/bookmarks (로그인한 사용자만)
    GET              → { items: [...] }  저장한 목록(최근 저장순)
    POST   { item }  → { ok, item }      저장(같은 원문 URL이면 덮어씀)
+   PATCH  { url, customTitle } → { ok, item }  북마크 이름 변경(빈 문자열이면 원래 제목으로)
    DELETE { url }   → { ok }            해제
    저장소: Vercel KV(Upstash Redis) 해시 하나에 사용자별로 담는다.
    키 bm:v1:<Google sub>, 필드 = 원문 URL의 SHA-256 앞 32자, 값 = 항목 스냅숏 JSON.
@@ -17,7 +18,7 @@ import { DAY_TTL_SECONDS, SAVES_ALL, saveDayKey } from "./_lib/ranking.js";
 const MAX_BOOKMARKS = 500;
 const MAX_BODY_CHARS = 20000;
 // 저장할 필드와 최대 길이
-const TEXT_FIELDS = { id: 100, title: 300, summary: 2000, insight: 2000, author: 100, category: 50, source: 50, archivedAt: 40 };
+const TEXT_FIELDS = { id: 100, title: 300, customTitle: 300, summary: 2000, insight: 2000, author: 100, category: 50, source: 50, archivedAt: 40 };
 
 export const keyFor = (sub) => `bm:v1:${sub}`;
 const fieldFor = (url) => crypto.createHash("sha256").update(url).digest("hex").slice(0, 32);
@@ -87,9 +88,9 @@ export function parseAll(flat) {
 
 export default async function handler(req, res) {
   noStore(res);
-  if (!["GET", "POST", "DELETE"].includes(req.method)) {
-    res.setHeader("Allow", "GET, POST, DELETE");
-    return res.status(405).json({ error: "GET·POST·DELETE 요청만 받습니다." });
+  if (!["GET", "POST", "PATCH", "DELETE"].includes(req.method)) {
+    res.setHeader("Allow", "GET, POST, PATCH, DELETE");
+    return res.status(405).json({ error: "GET·POST·PATCH·DELETE 요청만 받습니다." });
   }
 
   let user;
@@ -131,6 +132,27 @@ export default async function handler(req, res) {
       item.savedAt = new Date().toISOString();
       await command("HSET", key, field, JSON.stringify(item));
       if (!exists) await countSave(item, 1);
+      return res.status(200).json({ ok: true, item });
+    }
+
+    // PATCH: 북마크 이름 변경 { url, customTitle }. 빈 문자열이면 원래 제목으로 되돌린다.
+    if (req.method === "PATCH") {
+      const url = cleanURL(body.url);
+      if (!url) return res.status(400).json({ error: "이름을 바꿀 원문 url이 필요합니다." });
+      const customTitle = typeof body.customTitle === "string" ? body.customTitle.trim().slice(0, 300) : "";
+      const field = fieldFor(url);
+      const prev = await command("HGET", key, field);
+      if (!prev) return res.status(404).json({ error: "북마크에 없는 글입니다." });
+      let item;
+      try {
+        item = JSON.parse(prev);
+      } catch {
+        return res.status(422).json({ error: "저장된 북마크를 읽지 못했습니다." });
+      }
+      if (!item || !item.url) return res.status(422).json({ error: "저장된 북마크를 읽지 못했습니다." });
+      if (customTitle) item.customTitle = customTitle;
+      else delete item.customTitle;
+      await command("HSET", key, field, JSON.stringify(item));
       return res.status(200).json({ ok: true, item });
     }
 

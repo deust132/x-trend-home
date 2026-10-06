@@ -2,7 +2,8 @@
    GET ?format=md  → text/markdown  "# 내 북마크\n\n## [카테고리] 제목\n- 요약\n- 링크\n"
    GET ?format=csv → text/csv       머리글 "제목,카테고리,요약,URL,저장일" (엑셀 한글 깨짐 방지 BOM 포함)
    Content-Disposition: attachment 로 내려 브라우저가 파일로 저장한다.
-   목록은 api/bookmarks.js와 같은 KV 해시(bm:v1:<sub>)에서 읽는다(최근 저장순). */
+   목록은 api/bookmarks.js와 같은 KV 해시(bm:v1:<sub>)에서 읽는다(최근 저장순).
+   사용자가 바꾼 북마크 이름(customTitle)이 있으면 그걸 제목으로 쓴다. */
 
 import { command, kvConfigured } from "./_lib/kv.js";
 import { getSession, noStore } from "./_lib/session.js";
@@ -16,6 +17,12 @@ const FORMATS = {
 
 const oneLine = (v) => String(v ?? "").replace(/\s+/g, " ").trim();
 
+// 바꾼 이름이 있으면 그걸, 없으면 원래 제목을 쓴다.
+const displayTitle = (it) => {
+  const c = typeof it.customTitle === "string" ? it.customTitle.trim() : "";
+  return c || it.title;
+};
+
 function savedDay(it) {
   const t = Date.parse(it.savedAt);
   return Number.isFinite(t) ? kstDate(new Date(t)) : "";
@@ -26,7 +33,7 @@ export function toMarkdown(items) {
   const out = ["# 내 북마크", ""];
   if (!items.length) out.push("저장한 북마크가 없습니다.", "");
   for (const it of items) {
-    out.push(`## [${oneLine(it.category) || "기타"}] ${oneLine(it.title)}`);
+    out.push(`## [${oneLine(it.category) || "기타"}] ${oneLine(displayTitle(it))}`);
     out.push(`- ${oneLine(it.summary) || "(요약 없음)"}`);
     out.push(`- ${it.url}`);
     out.push("");
@@ -43,7 +50,7 @@ function csvCell(value) {
 
 export function toCSV(items) {
   const rows = [["제목", "카테고리", "요약", "URL", "저장일"]]
-    .concat(items.map((it) => [it.title, it.category || "기타", it.summary || "", it.url, savedDay(it)]));
+    .concat(items.map((it) => [displayTitle(it), it.category || "기타", it.summary || "", it.url, savedDay(it)]));
   return `\uFEFF${rows.map((r) => r.map(csvCell).join(",")).join("\r\n")}\r\n`;
 }
 

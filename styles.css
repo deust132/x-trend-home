@@ -225,6 +225,28 @@ main > section { scroll-margin-top: calc(var(--viewbar-h) + 8px); margin-top: 22
 .hot { font-family: var(--type); font-weight: 700; color: var(--pencil); }
 .report__title { margin: 0; font-family: var(--serif); font-weight: 700; font-size: 1.07rem; line-height: 1.45; }
 .report__summary { margin: 8px 0 0; font-size: 0.95rem; }
+/* 구버전 표시 — 제목에만 취소선, 카드 전체 회색 톤 */
+.report--outdated { opacity: 0.72; }
+.report--outdated .report__title { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.outdated-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  background: #6c727a; color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
+}
+.outdated-reason {
+  margin: 6px 0 0; padding: 8px 10px; border-left: 3px solid #9aa0a8; border-radius: 0 6px 6px 0;
+  background: rgba(108, 114, 122, 0.08); font-size: 0.85rem; color: var(--graphite);
+}
+.outdated-newer { margin: 6px 0 0; font-size: 0.85rem; }
+.outdated-newer a { color: var(--stamp); font-weight: 700; }
+/* 구버전 포함 토글 */
+.outdated-toggle { margin: 8px 0; }
+.outdated-toggle__label {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 0.9rem; color: var(--graphite); user-select: none;
+  min-height: 44px; padding: 0 4px;
+}
+.outdated-toggle__input { width: 18px; height: 18px; accent-color: var(--stamp); cursor: pointer; }
+.outdated-toggle__count { color: var(--graphite); font-size: 0.82rem; }
 /* 태그 뱃지 — 분류 색과 섞이지 않는 중립 회색 */
 .tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
 .tag {

@@ -169,10 +169,11 @@
       var id = "report-" + i;
       var share = shareHTML(it, id);
       var comments = commentsHTML(it, id);
-      return '<li class="report' + (mediaOf(it).length ? " report--media" : "") + '" id="' + id + '" data-item="' + itemKey(it) + '"' + categoryStyle(it.category) + "><article>" +
+      return '<li class="report' + (mediaOf(it).length ? " report--media" : "") + (it.outdated ? " report--outdated" : "") + '" id="' + id + '" data-item="' + itemKey(it) + '"' + categoryStyle(it.category) + "><article>" +
           mediaHTML(it) +
-          '<p class="report__meta">' + metaHTML(it, true) + "</p>" +
+          '<p class="report__meta">' + metaHTML(it, true) + outdatedBadgeHTML(it) + "</p>" +
           '<h3 class="report__title">' + titleHTML(it, mark) + "</h3>" +
+          outdatedNoteHTML(it) +
           tagsHTML(it) +
           '<p class="report__summary">' + (mark ? mark(it, "summary") : highlightQuote(it.summary)) + "</p>" +
           insightHTML(it.insight, mark && it.insight ? mark(it, "insight") : "") +
@@ -935,7 +936,7 @@
   // sets: 보기별 전체 항목, shown: 지금 목록에 보이는 항목(챗봇 컨텍스트용)
   var reportView = {
     view: "today", sets: { today: [], archive: [], best: [], bookmarks: [] }, archiveUpdated: "",
-    category: ALL, tag: "", query: "", shown: [], item: ""
+    category: ALL, tag: "", query: "", shown: [], item: "", showOutdated: false
   };
 
   // "#view=archive&cat=<분류>&tag=<태그>&item=<카드 키>" (예전 "#cat=<분류>"도 읽는다)
@@ -1056,6 +1057,36 @@
     return name ? items.filter(function (it) { return it.category === name; }) : items;
   }
 
+  // 구버전 필터: 기본(false)은 최신만, true면 구버전 포함
+  function inOutdated(items, show) {
+    return show ? items : items.filter(function (it) { return !it.outdated; });
+  }
+
+  // 구버전 배지 (메타 줄 안에 들어간다)
+  function outdatedBadgeHTML(it) {
+    return it.outdated ? '<span class="outdated-badge">구버전</span>' : "";
+  }
+
+  // 구버전 사유·새 버전 링크 (제목 아래 별도 줄)
+  function outdatedNoteHTML(it) {
+    if (!it.outdated) return "";
+    var html = "";
+    if (it.outdatedReason) {
+      html += '<p class="outdated-reason">' + escapeHTML(it.outdatedReason) + "</p>";
+    }
+    if (it.duplicateOf) {
+      var newer = null;
+      var arch = reportView.sets.archive || [];
+      for (var i = 0; i < arch.length; i++) {
+        if (arch[i].id === it.duplicateOf) { newer = arch[i]; break; }
+      }
+      if (newer) {
+        html += '<p class="outdated-newer"><a href="' + escapeHTML(permalink(newer)) + '">최신 자료 보기 ↗</a></p>';
+      }
+    }
+    return html;
+  }
+
   // Fuse.js가 로드됐으면 퍼지 검색, CDN 실패 시 단순 includes() 검색.
   function searchItems(items, query) {
     if (typeof window.Fuse === "function") {
@@ -1122,8 +1153,31 @@
     el.classList.toggle("search-status--fallback", !!fallback);
   }
 
+  // 구버전 토글: 구버전 항목이 있을 때만 보인다. 기본 OFF(최신만).
+  function refreshOutdatedToggle() {
+    var wrap = $("outdated-toggle");
+    if (!wrap) return;
+    var n = currentItems().filter(function (it) { return it.outdated; }).length;
+    wrap.hidden = !n;
+    var input = $("outdated-toggle-input");
+    if (input) input.checked = reportView.showOutdated;
+    var count = $("outdated-toggle-count");
+    if (count) count.textContent = n ? "(" + n + ")" : "";
+  }
+
+  function setupOutdatedToggle() {
+    var input = $("outdated-toggle-input");
+    if (!input) return;
+    input.addEventListener("change", function () {
+      reportView.showOutdated = input.checked;
+      applyReportView();
+    });
+    refreshOutdatedToggle();
+  }
+
   function applyReportView() {
-    var scoped = inTag(inCategory(currentItems(), reportView.category), reportView.tag);
+    var scoped = inOutdated(inTag(inCategory(currentItems(), reportView.category), reportView.tag), reportView.showOutdated);
+    refreshOutdatedToggle();
     var query = reportView.query.trim();
     if (!query) {
       setSearchStatus(reportView.tag ? "#" + escapeHTML(reportView.tag) + " 태그 <strong>" + scoped.length + "</strong>건" : "");
@@ -2471,6 +2525,7 @@
       setupViews();
       setupCategories();
       setupSearch();
+      setupOutdatedToggle();
       setupTags();
       setupTrendReport();
       setupParticipation();

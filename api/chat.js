@@ -278,6 +278,16 @@ export function verifyReply(reply, context, sources = []) {
   const seen = new Set();
   const warn = (msg) => { if (!seen.has(msg)) { seen.add(msg); warnings.push(msg); } };
 
+  // 부정 문맥에서 인용된 경우(예: "X라는 항목이 없습니다")는 환각이 아니라 올바른 부정이므로 경고하지 않는다.
+  const DENIAL_PHRASES = ["찾지 못", "찾을 수 없", "없습니다", "없어요", "없다", "존재하지 않",
+    "데이터에 없", "확인되지 않", "아카이브에 없", "포함되어 있지 않", "알 수 없", "불가능합니다"];
+  function inDenialContext(matchIndex, matchLen) {
+    const W = 150;
+    const before = reply.slice(Math.max(0, matchIndex - W), matchIndex);
+    const after = reply.slice(matchIndex + matchLen, matchIndex + matchLen + W);
+    return DENIAL_PHRASES.some((p) => before.includes(p) || after.includes(p));
+  }
+
   // ① 따옴표·굵게로 인용한 제목
   const quoted = /\*\*([^*\n]+)\*\*|["“]([^"”\n]+)["”]|「([^」\n]+)」|『([^』\n]+)』/g;
   for (const m of reply.matchAll(quoted)) {
@@ -285,29 +295,32 @@ export function verifyReply(reply, context, sources = []) {
     const key = norm(raw);
     if (key.length < MIN_TITLE_CHARS) continue;
     if (CATEGORIES.some((c) => norm(c) === key) || norm(SYSTEM_PROMPT).includes(key)) continue; // 분류명·규칙 문구 인용은 통과
-    if (!titles.some((t) => t.includes(key) || key.includes(t)) && !corpus.includes(key)) {
+    if (!titles.some((t) => t.includes(key) || key.includes(t)) && !corpus.includes(key)
+        && !inDenialContext(m.index, m[0].length)) {
       warn(`제목 "${raw.slice(0, 80)}"`);
     }
   }
 
   // ② 분류 이름: "[X]" 또는 "X 카테고리/분류" 형태
-  const catRefs = [
-    ...[...reply.matchAll(/\[([^\]\n]{2,20})\]/g)].map((m) => m[1]),
-    ...[...reply.matchAll(/["'“‘「『*]*([^\s"'“”‘’「」『』*,.()]+(?:\s*·\s*[^\s"'“”‘’「」『』*,.()]+)+)["'”’」』*]*\s*(?:카테고리|분류)/g)].map((m) => m[1])
+  const catMatches = [
+    ...reply.matchAll(/\[([^\]\n]{2,20})\]/g),
+    ...reply.matchAll(/["'“‘「『*]*([^\s"'“”‘’「」『』*,.()]+(?:\s*·\s*[^\s"'“”‘’「」『』*,.()]+)+)["'”’」』*]*\s*(?:카테고리|분류)/g)
   ];
-  for (const ref of catRefs) {
-    const r = ref.trim();
+  for (const m of catMatches) {
+    const r = m[1].trim();
     if (/^\d+$/.test(r) || /^https?:/.test(r)) continue;
-    if (![...categories].some((c) => c === r || c.endsWith(r))) warn(`분류 "${r}"`);
+    if (![...categories].some((c) => c === r || c.endsWith(r))
+        && !inDenialContext(m.index, m[0].length)) warn(`분류 "${r}"`);
   }
 
   // ③ 좋아요 수와 작성자
   for (const m of reply.matchAll(/좋아요\s*([\d,]+)/g)) {
     const n = m[1].replace(/,/g, "");
-    if (n && !likes.has(n)) warn(`좋아요 ${m[1]}`);
+    if (n && !likes.has(n) && !inDenialContext(m.index, m[0].length)) warn(`좋아요 ${m[1]}`);
   }
   for (const m of reply.matchAll(/@([A-Za-z0-9_]{1,15})/g)) {
-    if (!authors.has(m[1].toLowerCase()) && !corpus.includes(m[1].toLowerCase())) warn(`작성자 @${m[1]}`);
+    if (!authors.has(m[1].toLowerCase()) && !corpus.includes(m[1].toLowerCase())
+        && !inDenialContext(m.index, m[0].length)) warn(`작성자 @${m[1]}`);
   }
   return warnings;
 }

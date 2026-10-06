@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/api/auth/:route(login|callback|logout|me)", "destination": "/api/auth?route=:route" },
+    { "source": "/api/jev/:route(categorize|duplicates|score)", "destination": "/api/jev?route=:route" },
+    { "source": "/api/likes/top", "destination": "/api/likes?route=top" },
+    { "source": "/api/submit/approve", "destination": "/api/submit?route=approve" }
+  ]
+}

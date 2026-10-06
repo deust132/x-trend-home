@@ -2,64 +2,215 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <title>AI 트렌드 리포트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F6F1E7">
+  <link rel="icon" href="data:,">
+  <title>리서치 데스크 — AI 트렌드 리포트</title>
+  <meta name="description" content="AI 트렌드 일일 리포트 — 애널리스트의 책상에서">
+  <!-- 공유(카카오톡·X·텔레그램) 미리보기 -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="리서치 데스크">
+  <meta property="og:title" content="리서치 데스크 — AI 트렌드 리포트">
+  <meta property="og:description" content="AI 트렌드 일일 리포트 — 애널리스트의 책상에서">
+  <meta name="twitter:card" content="summary">
+  <!-- 아카이브 최신 30건 RSS 2.0 피드 (api/rss.js) -->
+  <link rel="alternate" type="application/rss+xml" title="리서치 데스크 — AI 트렌드 아카이브" href="/api/rss">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <h1 class="brand">AI 트렌드 리포트</h1>
-      <p class="updated" id="updated-at" aria-live="polite"></p>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+
+  <header class="masthead">
+    <div class="masthead__row">
+      <h1 class="masthead__title">리서치 데스크</h1>
+      <!-- 로그인 영역: /api/auth/me 응답으로 채운다. 로그인 서버가 없으면 숨긴 채 둔다. -->
+      <div class="account" id="account" hidden></div>
     </div>
-    <nav class="wrap section-nav" aria-label="섹션 이동">
-      <a href="#report">오늘의 리포트</a>
-      <a href="#insights">인사이트</a>
-      <a href="#trends">트렌드</a>
-    </nav>
+    <p class="masthead__sub">AI 트렌드 일일 리포트 — 애널리스트의 책상에서</p>
+    <p class="masthead__updated">업데이트 <time id="updated-at">불러오는 중…</time></p>
+    <p class="account-notice" id="account-notice" role="status" aria-live="polite" hidden></p>
+    <!-- 독자 참여: 링크 추천(api/submit.js) · 새 글 알림(api/notify.js). API가 없으면 숨긴 채 둔다. -->
+    <div class="desk-actions" id="desk-actions" hidden>
+      <button type="button" class="desk-actions__btn" data-desk="submit" aria-haspopup="dialog" aria-controls="submit-dialog">＋ 링크 추천하기</button>
+      <button type="button" class="desk-actions__btn" data-desk="notify" aria-haspopup="dialog" aria-controls="notify-dialog">✉ 새 글 알림 받기</button>
+    </div>
   </header>
 
-  <main class="wrap">
-    <section id="report" class="section" aria-labelledby="report-title">
+  <!-- 화면 위에 붙어 다니는 보기 전환 -->
+  <nav class="viewbar" aria-label="보기 전환">
+    <div class="viewbar__inner" role="tablist" aria-label="리포트 보기">
+      <button type="button" role="tab" class="viewbar__tab" id="view-tab-today" data-view="today"
+        aria-controls="main" aria-selected="true">오늘의 리포트 <span class="viewbar__count" id="count-today"></span></button>
+      <button type="button" role="tab" class="viewbar__tab" id="view-tab-archive" data-view="archive"
+        aria-controls="main" aria-selected="false" tabindex="-1">아카이브 <span class="viewbar__count" id="count-archive"></span></button>
+      <button type="button" role="tab" class="viewbar__tab" id="view-tab-best" data-view="best"
+        aria-controls="main" aria-selected="false" tabindex="-1">주간 베스트 <span class="viewbar__count" id="count-best"></span></button>
+      <button type="button" role="tab" class="viewbar__tab" id="view-tab-bookmarks" data-view="bookmarks"
+        aria-controls="main" aria-selected="false" tabindex="-1">내 북마크 <span class="viewbar__count" id="count-bookmarks"></span></button>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <!-- 오늘 보기 전용: 최대 화제 + 인사이트 -->
+    <section id="front" class="front" data-only="today" aria-labelledby="front-heading">
+      <h2 id="front-heading" class="visually-hidden">오늘의 최대 화제</h2>
+      <div id="front-body"><p class="loading">리포트를 펼치는 중…</p></div>
+    </section>
+
+    <section id="insights" class="insights" data-only="today" aria-labelledby="insights-heading">
       <div class="section-head">
-        <h2 id="report-title">오늘의 리포트</h2>
-        <span class="section-meta" id="report-meta"></span>
+        <h2 id="insights-heading" class="section-title">데스크 인사이트</h2>
+        <div class="seg" role="tablist" aria-label="인사이트 기간">
+          <button type="button" role="tab" id="tab-daily" aria-controls="panel-insight" aria-selected="true" data-period="daily">일간</button>
+          <button type="button" role="tab" id="tab-weekly" aria-controls="panel-insight" aria-selected="false" tabindex="-1" data-period="weekly">주간</button>
+          <button type="button" role="tab" id="tab-monthly" aria-controls="panel-insight" aria-selected="false" tabindex="-1" data-period="monthly">월간</button>
+        </div>
       </div>
-      <div id="report-list" class="card-grid" aria-busy="true">
-        <p class="state">불러오는 중…</p>
+      <div class="insight-sheet" id="panel-insight" role="tabpanel" aria-labelledby="tab-daily" tabindex="0">
+        <p class="loading">인사이트를 불러오는 중…</p>
       </div>
     </section>
 
-    <section id="insights" class="section" aria-labelledby="insights-title">
+    <!-- 주간 베스트 보기 전용: 트렌드 리포트 (api/trends-report.js) -->
+    <section id="trend-report" class="trend-report" data-only="best" aria-labelledby="trend-report-heading" hidden>
       <div class="section-head">
-        <h2 id="insights-title">인사이트</h2>
+        <h2 id="trend-report-heading" class="section-title">트렌드 리포트</h2>
+        <div class="seg" role="tablist" aria-label="리포트 기간">
+          <button type="button" role="tab" id="tr-tab-week" aria-controls="trend-report-body" aria-selected="true" data-report-period="week">주간</button>
+          <button type="button" role="tab" id="tr-tab-month" aria-controls="trend-report-body" aria-selected="false" tabindex="-1" data-report-period="month">월간</button>
+        </div>
       </div>
-      <div class="tabs" role="tablist" aria-label="인사이트 기간">
-        <button type="button" role="tab" id="tab-daily" data-period="daily" aria-controls="insight-panel" aria-selected="true">데일리</button>
-        <button type="button" role="tab" id="tab-weekly" data-period="weekly" aria-controls="insight-panel" aria-selected="false" tabindex="-1">주간</button>
-        <button type="button" role="tab" id="tab-monthly" data-period="monthly" aria-controls="insight-panel" aria-selected="false" tabindex="-1">월간</button>
-      </div>
-      <div id="insight-panel" class="panel" role="tabpanel" aria-labelledby="tab-daily" tabindex="0">
-        <p class="state">불러오는 중…</p>
+      <div id="trend-report-body" class="trend-report__body" role="tabpanel" aria-labelledby="trend-report-heading" aria-live="polite">
+        <p class="loading">리포트를 집계하는 중…</p>
       </div>
     </section>
 
-    <section id="trends" class="section" aria-labelledby="trends-title">
+    <!-- 목록: 모든 보기 공통 -->
+    <section id="reports" class="reports" aria-labelledby="reports-heading">
       <div class="section-head">
-        <h2 id="trends-title">트렌드</h2>
-        <span class="section-meta" id="trends-meta"></span>
+        <h2 id="reports-heading" class="section-title"><span id="reports-title">오늘의 리포트</span> <span class="section-title__count" id="reports-count"></span></h2>
       </div>
-      <div id="trend-list" class="trend-list">
-        <p class="state">불러오는 중…</p>
+      <p class="archive-label" id="archive-label" hidden></p>
+      <!-- 내 북마크 보기 + 로그인 상태에서만: 북마크 내보내기(api/export.js) -->
+      <div class="export-bar" id="export-bar" role="group" aria-label="북마크 내보내기" hidden>
+        <span class="export-bar__label">내보내기</span>
+        <button type="button" class="export-bar__btn" data-export="md">Markdown (.md)</button>
+        <button type="button" class="export-bar__btn" data-export="csv">CSV (.csv)</button>
       </div>
+
+      <form class="search" id="report-search" role="search" aria-label="리포트 검색">
+        <label class="visually-hidden" for="report-search-input">제목·요약·인사이트에서 찾기</label>
+        <span class="search__icon" aria-hidden="true">⌕</span>
+        <input type="search" id="report-search-input" class="search__input" name="q" enterkeyhint="search"
+          placeholder="제목·요약·인사이트 검색" autocomplete="off" spellcheck="false" maxlength="80"
+          aria-describedby="search-status">
+      </form>
+
+      <fieldset class="cats">
+        <legend class="cats__legend">분류</legend>
+        <div class="cats__grid" id="category-tabs"></div>
+      </fieldset>
+
+      <div class="tag-filter" id="tag-filter" hidden></div>
+      <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+      <ol id="report-list" class="report-list" aria-labelledby="reports-heading"><li class="loading">목록을 불러오는 중…</li></ol>
+    </section>
+
+    <!-- 아카이브 보기 전용: 승인된 독자 추천 링크 (api/submit.js?status=approved) -->
+    <section id="picks" class="picks" data-only="archive" aria-labelledby="picks-heading" hidden>
+      <div class="section-head">
+        <h2 id="picks-heading" class="section-title">독자 추천 링크</h2>
+      </div>
+      <div id="picks-body" aria-live="polite"><p class="loading">추천 링크를 불러오는 중…</p></div>
+    </section>
+
+    <section id="trends" class="trends" data-only="today" aria-labelledby="trends-heading">
+      <div class="section-head">
+        <h2 id="trends-heading" class="section-title">트렌드</h2>
+        <p class="trends__meta" id="trends-meta"></p>
+      </div>
+      <ul id="trend-list" class="trend-list"><li class="loading">트렌드를 불러오는 중…</li></ul>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap">데이터는 매일 <code>data/*.json</code>에서 갱신됩니다.</div>
+  <footer class="colophon">
+    <p><a class="colophon__rss" href="/api/rss">RSS 구독</a> · 데이터: <code>data/daily.json</code> · <code>data/archive.json</code> · <code>data/insights.json</code> · <code>data/trends.json</code></p>
   </footer>
 
+  <!-- 링크 추천 폼 -->
+  <dialog class="sheet" id="submit-dialog" aria-labelledby="submit-title">
+    <form class="sheet__form" id="submit-form" novalidate>
+      <h2 class="sheet__title" id="submit-title">링크 추천하기</h2>
+      <p class="sheet__hint">좋은 AI 글·도구를 알려 주세요. 검토 후 아카이브에 올립니다.</p>
+      <label class="field"><span class="field__label">링크 주소 <em>필수</em></span>
+        <input class="field__input" type="url" name="url" required maxlength="2000" placeholder="https://" inputmode="url" autocomplete="off"></label>
+      <label class="field"><span class="field__label">제목 <em>필수</em></span>
+        <input class="field__input" type="text" name="title" required maxlength="200" autocomplete="off"></label>
+      <label class="field"><span class="field__label">한 줄 설명</span>
+        <textarea class="field__input" name="description" rows="3" maxlength="1000"></textarea></label>
+      <label class="field"><span class="field__label">분류</span>
+        <select class="field__input" name="category" id="submit-category"></select></label>
+      <p class="sheet__status" id="submit-status" role="status" aria-live="polite"></p>
+      <div class="sheet__actions">
+        <button type="button" class="sheet__btn" data-close>취소</button>
+        <button type="submit" class="sheet__btn sheet__btn--primary" id="submit-send">추천 보내기</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 새 글 알림 설정 -->
+  <dialog class="sheet" id="notify-dialog" aria-labelledby="notify-title">
+    <form class="sheet__form" id="notify-form" novalidate>
+      <h2 class="sheet__title" id="notify-title">새 글 알림 받기</h2>
+      <p class="sheet__hint">관심 분류에 새 글이 올라오면 이메일로 알려 드립니다. 분류를 고르지 않으면 모든 분류를 받습니다.</p>
+      <p class="sheet__off" id="notify-off" hidden></p>
+      <label class="field"><span class="field__label">이메일</span>
+        <input class="field__input" type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email"></label>
+      <fieldset class="field field--set">
+        <legend class="field__label">관심 분류</legend>
+        <div class="checks" id="notify-categories"></div>
+      </fieldset>
+      <p class="sheet__status" id="notify-status" role="status" aria-live="polite"></p>
+      <div class="sheet__actions">
+        <button type="button" class="sheet__btn sheet__btn--quiet" id="notify-unsub" hidden>알림 해지</button>
+        <button type="button" class="sheet__btn" data-close>닫기</button>
+        <button type="submit" class="sheet__btn sheet__btn--primary" id="notify-send">알림 신청</button>
+      </div>
+    </form>
+  </dialog>
+
+  <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+
+  <button type="button" class="ask-fab" id="chat-open" aria-haspopup="dialog" aria-controls="chat-panel" aria-expanded="false">
+    <span aria-hidden="true">✎</span> 질문하기
+  </button>
+
+  <div class="chat-panel" id="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chat-title" hidden>
+    <!-- 크기 조절 손잡이: 위쪽 가장자리·왼쪽 가장자리·왼쪽 위 모서리 -->
+    <div class="resize resize--n" data-resize="n" role="separator" aria-orientation="horizontal" tabindex="0"
+      aria-label="질문 창 높이 조절 (위아래로 끌거나 방향키)"><span class="resize__grip" aria-hidden="true"></span></div>
+    <div class="resize resize--w" data-resize="w" role="separator" aria-orientation="vertical" tabindex="0"
+      aria-label="질문 창 너비 조절 (좌우로 끌거나 방향키)"></div>
+    <div class="resize resize--nw" data-resize="nw" aria-hidden="true"></div>
+
+    <header class="chat-panel__head">
+      <h2 class="chat-panel__title" id="chat-title">리서치 데스크에 질문하기</h2>
+      <button type="button" class="chat-panel__btn" id="chat-reset-size" title="창 크기 원래대로">크기 초기화</button>
+      <button type="button" class="chat-panel__btn chat-panel__close" id="chat-close" aria-label="질문 창 닫기"><span aria-hidden="true">×</span></button>
+    </header>
+    <ol class="chat-log" id="chat-log" aria-label="대화 기록" aria-live="polite"></ol>
+    <form class="chat-form" id="chat-form">
+      <label class="visually-hidden" for="chat-input">질문 입력</label>
+      <textarea id="chat-input" class="chat-form__input" rows="2" maxlength="2000" enterkeyhint="send"
+        placeholder="리포트에 대해 물어보세요"></textarea>
+      <button type="submit" class="chat-form__send" id="chat-send">보내기</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

@@ -1,40 +1,75 @@
 {
-  "updatedAt": "2026-10-05T08:00:00+09:00",
-  "range": { "start": "2026-09-29", "end": "2026-10-05", "label": "최근 7일" },
+  "updated": "2026-10-06T09:00:00+09:00",
   "topics": [
     {
-      "topic": "AI 에이전트",
-      "description": "코딩·업무 자동화 에이전트",
-      "mentions": 18420,
-      "changePct": 34.2,
-      "series": [1910, 2140, 2380, 2520, 2860, 3150, 3460]
+      "name": "AI 코딩·에이전트",
+      "mentions": 9,
+      "spark": [
+        5,
+        6,
+        7,
+        9
+      ]
     },
     {
-      "topic": "로컬 LLM",
-      "description": "온디바이스·소형 모델 실행",
-      "mentions": 9875,
-      "changePct": 21.5,
-      "series": [1180, 1220, 1310, 1290, 1420, 1650, 1805]
+      "name": "AI 미디어 생성",
+      "mentions": 8,
+      "spark": [
+        5,
+        6,
+        7,
+        8
+      ]
     },
     {
-      "topic": "AI 영상 생성",
-      "description": "숏폼·광고 영상 자동화",
-      "mentions": 7630,
-      "changePct": 8.1,
-      "series": [1050, 980, 1120, 1090, 1100, 1140, 1150]
+      "name": "기타",
+      "mentions": 7,
+      "spark": [
+        4,
+        5,
+        6,
+        7
+      ]
     },
     {
-      "topic": "AI 규제",
-      "description": "EU·국내 정책 동향",
-      "mentions": 4210,
-      "changePct": -6.4,
-      "series": [720, 690, 640, 580, 520, 560, 500]
+      "name": "디자인·크리에이티브",
+      "mentions": 6,
+      "spark": [
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
-      "topic": "프롬프트 엔지니어링",
-      "mentions": 3120,
-      "changePct": -12.8,
-      "series": [520, 500, 470, 450, 430, 390, 360]
+      "name": "개발·기술 일반",
+      "mentions": 5,
+      "spark": [
+        3,
+        4,
+        5,
+        5
+      ]
+    },
+    {
+      "name": "AI 학습·인사이트",
+      "mentions": 5,
+      "spark": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "name": "커리어·비즈니스",
+      "mentions": 2,
+      "spark": [
+        5,
+        6,
+        7,
+        2
+      ]
     }
   ]
 }

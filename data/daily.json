@@ -1,46 +1,306 @@
 {
-  "date": "2026-10-05",
-  "updatedAt": "2026-10-05T08:00:00+09:00",
+  "date": "2026-10-06",
+  "updatedAt": "2026-10-06T09:00:00+09:00",
   "items": [
     {
-      "id": "2026-10-05-001",
-      "title": "오픈소스 멀티모달 모델, 소형 GPU에서도 실시간 추론 시연",
-      "summary": "8B급 멀티모달 모델을 양자화해 소비자용 GPU 한 장에서 초당 30토큰 이상으로 돌리는 데모가 공유됐다. 로컬 에이전트 수요와 맞물려 반응이 컸다.",
-      "author": { "name": "김예시", "handle": "@example_ai" },
-      "likes": 4820,
-      "url": "https://x.com/example_ai/status/1000000000000000001",
-      "category": "모델",
+      "id": "2107158998495748264",
+      "title": "GPT-6 Astra·GPT-6.1 Sol 구독자 기본 속도 ~50% 상향",
+      "summary": "Sign in With ChatGPT 파트너(OpenCode·Pi·Amp·Devin 등)에도 적용. 당일 X 최대 반응.",
+      "author": "@thsottiaux",
+      "likes": 16435,
+      "url": "https://x.com/i/status/2107158998495748264",
+      "category": "AI 코딩·에이전트",
       "source": "X"
     },
     {
-      "id": "2026-10-05-002",
-      "title": "코딩 에이전트로 레거시 코드 마이그레이션한 3주 회고",
-      "summary": "10만 줄 규모 서비스를 에이전트와 함께 새 프레임워크로 옮긴 경험담. 테스트를 먼저 보강해야 에이전트 결과를 믿을 수 있었다는 점을 강조했다.",
-      "author": { "name": "Jane Sample", "handle": "@janesample" },
-      "likes": 2315,
-      "url": "https://x.com/janesample/status/1000000000000000002",
-      "category": "개발 도구",
+      "id": "2107164650249101695",
+      "title": "OpenAI, EU 규제 대응 텍스트 워터마킹 확대 — textGrain 오픈소스",
+      "summary": "탐지 한계를 인정하면서 오픈소스 공개. API는 opt-in 방식.",
+      "author": "@OpenAI",
+      "likes": 5151,
+      "url": "https://x.com/i/status/2107164650249101695",
+      "category": "AI 코딩·에이전트",
       "source": "X"
     },
     {
-      "id": "2026-10-05-003",
-      "title": "EU, 범용 AI 모델 투명성 가이드라인 세부안 공개",
-      "summary": "학습 데이터 요약 공개 양식과 평가 보고 주기가 구체화됐다. 국내 기업도 유럽 서비스 시 참고해야 할 항목이 정리돼 있다.",
-      "author": { "name": "정책 브리핑 봇", "handle": "@policy_brief" },
-      "likes": 980,
-      "url": "https://example.com/news/eu-gpai-guideline",
-      "category": "정책·규제",
-      "source": "뉴스"
+      "id": "2107080796200640689",
+      "title": "Chat·Work·Codex 단일 통합 경험 합병 확정",
+      "summary": "사용량 한도 체계는 불명확하다는 우려 제기.",
+      "author": "@CodexResets1",
+      "likes": 1873,
+      "url": "https://x.com/i/status/2107080796200640689",
+      "category": "AI 코딩·에이전트",
+      "source": "X"
     },
     {
-      "id": "2026-10-05-004",
-      "title": "AI 영상 생성으로 1주일 만에 숏폼 채널 1만 구독 달성 사례",
-      "summary": "기획·대본·편집 단계를 나눠 각기 다른 도구로 자동화한 워크플로가 공개됐다. 제작 시간을 영상당 2시간에서 20분으로 줄였다고 한다.",
-      "author": { "name": "박샘플", "handle": "@sample_creator" },
-      "likes": 1764,
-      "url": "https://x.com/sample_creator/status/1000000000000000004",
-      "category": "활용 사례",
+      "id": "2106944982104076309",
+      "title": "이번 주 GitHub 급상승 AI 레포 10선",
+      "summary": "Hindsight(에이전트 메모리)·paperclip(조직화)·Univer 등.",
+      "author": "@so_ainsight",
+      "likes": 604,
+      "url": "https://x.com/i/status/2106944982104076309",
+      "category": "AI 코딩·에이전트",
       "source": "X"
+    },
+    {
+      "id": "2107184044228452491",
+      "title": "Claude Code 상태줄 cache countdown 팁",
+      "summary": "캐시 만료 직후 첫 메시지가 비용 폭탄 — 타이밍 조절.",
+      "author": "@Voxyz_ai",
+      "likes": 416,
+      "url": "https://x.com/i/status/2107184044228452491",
+      "category": "AI 코딩·에이전트",
+      "source": "X"
+    },
+    {
+      "id": "2106928507809100018",
+      "title": "Seedance 2.5 극찬 영상 작품 + 프롬프트 공유",
+      "summary": "최신 영상 모델 실전 레퍼런스.",
+      "author": "@ElsaSofia__AI",
+      "likes": 2515,
+      "url": "https://x.com/i/status/2106928507809100018",
+      "category": "AI 미디어 생성",
+      "source": "X"
+    },
+    {
+      "id": "2106975540192387366",
+      "title": "AI 할머니 캐릭터 인스타 팔로워 200만",
+      "summary": "Claude 대본+Veo 3. 얼굴 공개·촬영 없음.",
+      "author": "@cleanup2eok",
+      "likes": 497,
+      "url": "https://x.com/i/status/2106975540192387366",
+      "category": "AI 미디어 생성",
+      "source": "X"
+    },
+    {
+      "id": "2107032081800798405",
+      "title": "Muse 비디오 생성 제한 실측",
+      "summary": "성적·폭력·흡연·학교 씬 거부. 일반 영상은 Seedance 2.0 mini급.",
+      "author": "@SUOHA_AI",
+      "likes": 187,
+      "url": "https://x.com/i/status/2107032081800798405",
+      "category": "AI 미디어 생성",
+      "source": "X"
+    },
+    {
+      "id": "2107134971190067363",
+      "title": "AI 영상 생성 GitHub 레포 10선",
+      "summary": "ComfyUI·Diffusers·Open-Sora 등.",
+      "author": "@RoundtableSpace",
+      "likes": 108,
+      "url": "https://x.com/i/status/2107134971190067363",
+      "category": "AI 미디어 생성",
+      "source": "X"
+    },
+    {
+      "id": "2107149824189698558",
+      "title": "HyperFrames Studio — 에이전트를 위한 비디오 에디터",
+      "summary": "설명→에이전트 제작→동일 타임라인 협업.",
+      "author": "@HyperFrames_",
+      "likes": 2646,
+      "url": "https://x.com/i/status/2107149824189698558",
+      "category": "디자인·크리에이티브",
+      "source": "X"
+    },
+    {
+      "id": "2106904475625832542",
+      "title": "글로벌 디자이너 레퍼런스 무료 사이트 모음",
+      "summary": "미디어·프로덕트·UI/UX 레퍼런스.",
+      "author": "@winneravgwin",
+      "likes": 1221,
+      "url": "https://x.com/i/status/2106904475625832542",
+      "category": "디자인·크리에이티브",
+      "source": "X"
+    },
+    {
+      "id": "2107154889478664342",
+      "title": "Higgsfield Ads Studio — ROAS 기반 광고 콘텐츠 머신",
+      "summary": "성과 기반 정적 광고 자동 생산.",
+      "author": "@higgsfield_ai",
+      "likes": 913,
+      "url": "https://x.com/i/status/2107154889478664342",
+      "category": "디자인·크리에이티브",
+      "source": "X"
+    },
+    {
+      "id": "2107038389803319665",
+      "title": "AI 디자인 시대 북마크팩",
+      "summary": "웹 템플릿 100+·900+ 에셋.",
+      "author": "@VullnetAdemaj",
+      "likes": 542,
+      "url": "https://x.com/i/status/2107038389803319665",
+      "category": "디자인·크리에이티브",
+      "source": "X"
+    },
+    {
+      "id": "2107099903897866308",
+      "title": "TikTok 캐러셀 자동 생성 시스템",
+      "summary": "숏폼 파생 콘텐츠 자동화.",
+      "author": "@theo_louro",
+      "likes": 659,
+      "url": "https://x.com/i/status/2107099903897866308",
+      "category": "디자인·크리에이티브",
+      "source": "X"
+    },
+    {
+      "id": "2107012842243117246",
+      "title": "$20 Pro Opus 5.5 Light 2시간 실측",
+      "summary": "4,090만 토큰·80 tokens/sec·5시간 한도의 35%만 사용.",
+      "author": "@Claudeupdates11",
+      "likes": 3118,
+      "url": "https://x.com/i/status/2107012842243117246",
+      "category": "AI 학습·인사이트",
+      "source": "X"
+    },
+    {
+      "id": "2107210805097955",
+      "title": "$100 플랜 Sonnet 5.5 Max 테스트 인상적",
+      "summary": "상위 플랜 가성비 판단 자료.",
+      "author": "@Claudeupdates11",
+      "likes": 436,
+      "url": "https://x.com/i/status/2107210805097955",
+      "category": "AI 학습·인사이트",
+      "source": "X"
+    },
+    {
+      "id": "2106928233191297279",
+      "title": "어도비 대체 Rust 오픈소스 'ArtCraft'",
+      "summary": "MIT·로컬 구동·텔레메트리 0.",
+      "author": "@Dontgiveup_26",
+      "likes": 1829,
+      "url": "https://x.com/i/status/2106928233191297279",
+      "category": "커리어·비즈니스",
+      "source": "X"
+    },
+    {
+      "id": "2107076952695714216",
+      "title": "하루 2k 스타 TradingView Premium 오픈소스 레포 비공개 전환",
+      "summary": "인기 오픈소스의 공개 전환 리스크 사례.",
+      "author": "@cryptotrice",
+      "likes": 325,
+      "url": "https://x.com/i/status/2107076952695714216",
+      "category": "개발·기술 일반",
+      "source": "X"
+    },
+    {
+      "id": "2107069396644708833",
+      "title": "Muse 스킬 300개 정리 오픈소스 프로젝트",
+      "summary": "생활·업무·개발 8개 영역.",
+      "author": "@EvanWritesX",
+      "likes": 314,
+      "url": "https://x.com/i/status/2107069396644708833",
+      "category": "개발·기술 일반",
+      "source": "X"
+    },
+    {
+      "id": "2107097953097896106",
+      "title": "Anthropic, Cowork 로컬 옵션 제거",
+      "summary": "Pro/Max 신규 세션은 클라우드 실행으로 전환.",
+      "author": "@hqmank",
+      "likes": 1549,
+      "url": "https://x.com/i/status/2107097953097896106",
+      "category": "기타",
+      "source": "X"
+    },
+    {
+      "id": "2107126180495143192",
+      "title": "머스크의 Grok Bot 100% 활용 12페이지 PDF",
+      "summary": "12단계 블루프린트 공개.",
+      "author": "@ardentaxbt",
+      "likes": 1282,
+      "url": "https://x.com/i/status/2107126180495143192",
+      "category": "기타",
+      "source": "X"
+    },
+    {
+      "id": "2106995734046474442",
+      "title": "MiniMax-H3 360° Orbit LoRA 테스트",
+      "summary": "360도 회전 관점에 최적.",
+      "author": "@AiPhotorealGirl",
+      "likes": 1628,
+      "url": "https://x.com/i/status/2106995734046474442",
+      "category": "기타",
+      "source": "X"
+    },
+    {
+      "id": "2106936246690091188",
+      "title": "한국에서 X는 아직 블루오션이라는 주장",
+      "summary": "한국어권 X 성장 전략 관점.",
+      "author": "@AltoBot",
+      "likes": 450,
+      "url": "https://x.com/i/status/2106936246690091188",
+      "category": "기타",
+      "source": "X"
+    },
+    {
+      "id": "th:DeH1v5_DNZL",
+      "title": "Figma 공식 — Figma Motion에 텍스트 애니메이션·오디오 추가",
+      "summary": "Text animation and audio are now available in Figma Motion.",
+      "author": "@figma",
+      "likes": 101,
+      "url": "https://www.threads.com/@figma/post/DeH1v5_DNZL",
+      "category": "디자인·크리에이티브",
+      "source": "Threads"
+    },
+    {
+      "id": "th:DeGgbKYkbM8",
+      "title": "바이브코딩으로 디자인시스템 정리한 디자이너",
+      "summary": "피그마→GitHub+Codex 프로세스로 QA 제거.",
+      "author": "@bean_cake.mm",
+      "likes": 125,
+      "url": "https://www.threads.com/@bean_cake.mm/post/DeGgbKYkbM8",
+      "category": "커리어·비즈니스",
+      "source": "Threads"
+    },
+    {
+      "id": "th:DeIZuVHH8Tg",
+      "title": "Claude Code 2.1.290 — 백그라운드 세션을 이름으로 호출",
+      "summary": "claude attach <name>·claude logs <name>. ID 복사 불필요.",
+      "author": "@mj.plist",
+      "likes": 0,
+      "url": "https://www.threads.com/@mj.plist/post/DeIZuVHH8Tg",
+      "category": "AI 코딩·에이전트",
+      "source": "Threads"
+    },
+    {
+      "id": "th:DeIV9SkCR60",
+      "title": "10/9부터 Gemini 무료는 Flash-Lite만",
+      "summary": "월 7,500원 AI Plus에서도 Pro 제외.",
+      "author": "@ai.sparkup",
+      "likes": 0,
+      "url": "https://www.threads.com/@ai.sparkup/post/DeIV9SkCR60",
+      "category": "기타",
+      "source": "Threads"
+    },
+    {
+      "id": "gh:thedotmack/claude-mem",
+      "title": "thedotmack/claude-mem — 에이전트 세션 영속 컨텍스트",
+      "summary": "Claude Code·Codex·Gemini·Hermes 지원.",
+      "author": "GitHub 트렌딩",
+      "likes": 0,
+      "url": "https://github.com/thedotmack/claude-mem",
+      "category": "개발·기술 일반",
+      "source": "GitHub"
+    },
+    {
+      "id": "hn:49969183",
+      "title": "Beam: Reflection's 501B open-weight model",
+      "summary": "501B 오픈 웨이트 모델.",
+      "author": "Hacker News",
+      "likes": 277,
+      "url": "https://reflection.ai/blog/introducing-beam",
+      "category": "AI 학습·인사이트",
+      "source": "HN"
+    },
+    {
+      "id": "hn:49961057",
+      "title": "Anthropic reported diary entry to police, woman faces felony charge",
+      "summary": "AI 안전·신고 정책 논란.",
+      "author": "Hacker News",
+      "likes": 490,
+      "url": "https://www.techspot.com/news/114091-florida-woman-used-claude-diary-anthropic-reported-shoot.html",
+      "category": "기타",
+      "source": "HN"
     }
   ]
 }

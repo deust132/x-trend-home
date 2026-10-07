@@ -1,73 +1,73 @@
 {
-  "updated": "2026-10-06T09:00:00+09:00",
+  "updated": "2026-10-07T09:08:41.067889+09:00",
   "topics": [
     {
       "name": "AI 코딩·에이전트",
-      "mentions": 9,
+      "mentions": 4,
       "spark": [
-        5,
         6,
         7,
-        9
+        9,
+        4
       ]
     },
     {
       "name": "AI 미디어 생성",
-      "mentions": 8,
+      "mentions": 1,
       "spark": [
-        5,
         6,
         7,
-        8
+        8,
+        1
       ]
     },
     {
       "name": "기타",
-      "mentions": 7,
+      "mentions": 4,
       "spark": [
-        4,
         5,
         6,
-        7
+        7,
+        4
       ]
     },
     {
       "name": "디자인·크리에이티브",
-      "mentions": 6,
+      "mentions": 3,
       "spark": [
-        3,
         4,
         5,
-        6
+        6,
+        3
       ]
     },
     {
       "name": "개발·기술 일반",
-      "mentions": 5,
+      "mentions": 3,
       "spark": [
-        3,
         4,
         5,
-        5
+        5,
+        3
       ]
     },
     {
       "name": "AI 학습·인사이트",
-      "mentions": 5,
+      "mentions": 3,
       "spark": [
-        2,
         3,
         4,
-        5
+        5,
+        3
       ]
     },
     {
       "name": "커리어·비즈니스",
       "mentions": 2,
       "spark": [
-        5,
         6,
         7,
+        2,
         2
       ]
     }

@@ -1,24 +1,24 @@
 {
-  "daily": {
-    "date": "2026-10-07",
-    "points": [
-      "Mistral Large 4 — HN 944개 댓글의 이번 회차 최대 화제. 유럽 대형 모델 신버전으로 모델 스택 선택지 확대.",
-      "OpenAI Decisions API 공개 베타 — 확정적 판단을 생성형 응답에서 분리하는 새 API 패턴. 에이전트 설계에 직접 영향 (HN+Threads 교차 포착).",
-      "GitHub 트렌딩이 에이전트 스킬 주제로 가득 — mattpocock/skills, i-have-adhd, impeccable, diagram-design. '에이전트를 어떻게 다루는가'가 이번 주 화두.",
-      "오픈 모델 진전 — DeepSeek-V4-Pro(MIT 라이선스), EmbeddingGemma 2(경량 멀티모달 임베딩). 로컬·상업 활용 선택지 확대.",
-      "바이브코딩 대중화의 정서적 증거 — Threads 287 좋아요 랜딩페이지 사례. 진입장벽 하락이 체감되는 단계."
-    ]
-  },
-  "weekly": {
-    "week": "2026-10 W1",
-    "points": [
-      "주간 집계는 월요일에 갱신됩니다."
-    ]
-  },
-  "monthly": {
-    "month": "2026-10",
-    "points": [
-      "월간 집계는 매월 1일에 갱신됩니다."
-    ]
-  }
+ "daily": {
+  "date": "2026-10-08",
+  "points": [
+   "GPT-6 ChatGPT 전 사용자 출시 — '텍스트를 넘어선' 멀티모달 GPT-6를 12억 사용자 규모로. OpenAI 출시 주간 3일차의 정점 (X·HN 교차 포착).",
+   "Codex·ChatGPT Work 활성 사용자 4,000만 돌파 — 코딩 에이전트 시장의 규모가 가시화되는 지표. 이번 회차 X 최고 반응(14,074).",
+   "에이전트 인프라 3종 동시 부상 — 세션 메모리(claude-mem, Hermes 지원)·스킬 모음(agent-skills)·리뷰 플랫폼(Agent.reviews). '에이전트를 어떻게 다루는가'가 이번 주 화두.",
+   "Claude Haiku 5.5 출시 + Meta·Microsoft의 Claude 사용 축소 — 경량 모델 성능 상향과 동시에 빅테크의 AI 도구 통제 흐름. 구독·벤더 전략 재점검 시점.",
+   "AI 보조 수학 증명의 일상화 — 11정사각형 패킹 증명(HN)과 '수백 개 문제 진전'(Mollick). 과학의 재해석·신발견 가속이라는 프레임이 현장 증언으로 뒷받침."
+  ]
+ },
+ "weekly": {
+  "week": "2026-10 W1",
+  "points": [
+   "주간 집계는 월요일에 갱신됩니다."
+  ]
+ },
+ "monthly": {
+  "month": "2026-10",
+  "points": [
+   "월간 집계는 매월 1일에 갱신됩니다."
+  ]
+ }
 }

@@ -1,0 +1,373 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "ai-magazine.site-issue.v1",
+ "title": "사이트 호 내보내기(게시 관문 → 사이트)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "issue_date",
+  "issue_no",
+  "status",
+  "updated_at",
+  "articles"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-magazine.site-issue.v1"
+  },
+  "issue_date": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "issue_no": {
+   "type": "integer",
+   "minimum": 1
+  },
+  "status": {
+   "enum": [
+    "published",
+    "quiet"
+   ]
+  },
+  "quiet_note": {
+   "anyOf": [
+    {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 200
+    },
+    {
+     "type": "null"
+    }
+   ]
+  },
+  "updated_at": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2})$"
+  },
+  "cover": {
+   "anyOf": [
+    {
+     "type": "string",
+     "pattern": "^/(media|covers)/([A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.(webp|avif|jpg|jpeg|png|mp4|webm)$",
+     "maxLength": 200
+    },
+    {
+     "type": "null"
+    }
+   ]
+  },
+  "three_lines": {
+   "type": "array",
+   "maxItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "head",
+     "body"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "head": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+     },
+     "body": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240
+     },
+     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 80
+     }
+    }
+   }
+  },
+  "lead": {
+   "anyOf": [
+    {
+     "type": "string",
+     "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+     "maxLength": 80
+    },
+    {
+     "type": "null"
+    }
+   ]
+  },
+  "articles": {
+   "type": "array",
+   "maxItems": 60,
+   "items": {
+    "$ref": "#/$defs/article"
+   }
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "status": {
+      "const": "published"
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "articles": {
+      "minItems": 1
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "status": {
+      "const": "quiet"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "quiet_note"
+    ],
+    "properties": {
+     "quiet_note": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+     },
+     "articles": {
+      "maxItems": 0
+     },
+     "three_lines": {
+      "maxItems": 0
+     },
+     "lead": {
+      "type": "null"
+     }
+    }
+   }
+  }
+ ],
+ "$defs": {
+  "article": {
+   "type": "object",
+   "properties": {
+    "slug": {
+     "type": "string",
+     "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+     "maxLength": 80
+    },
+    "issue_date": {
+     "type": "string",
+     "format": "date"
+    },
+    "issue_no": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "desk": {
+     "enum": [
+      "에이전트·자동화",
+      "이미지·영상·디자인"
+     ]
+    },
+    "subtopic": {
+     "type": "string"
+    },
+    "kicker": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "dek": {
+     "type": "string",
+     "maxLength": 160
+    },
+    "body": {
+     "type": "object",
+     "properties": {
+      "what": {
+       "type": "string"
+      },
+      "how": {
+       "type": "string"
+      },
+      "why": {
+       "type": "string"
+      },
+      "try": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "what",
+      "how",
+      "why",
+      "try"
+     ],
+     "additionalProperties": false
+    },
+    "glossary": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "term": {
+        "type": "string"
+       },
+       "definition": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "term",
+       "definition"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "mentioned_entities": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "corrections": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "corrected_at": {
+        "type": "string",
+        "format": "date-time"
+       },
+       "text": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "corrected_at",
+       "text"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "official_link": {
+     "anyOf": [
+      {
+       "type": "object",
+       "required": [
+        "url",
+        "label"
+       ],
+       "additionalProperties": false,
+       "properties": {
+        "url": {
+         "type": "string",
+         "pattern": "^https://[^\\s@]+$",
+         "maxLength": 500
+        },
+        "label": {
+         "type": "string",
+         "minLength": 1,
+         "maxLength": 40
+        }
+       }
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "media": {
+     "type": "array",
+     "maxItems": 6,
+     "items": {
+      "type": "object",
+      "required": [
+       "src",
+       "alt",
+       "kind",
+       "made_with_ai"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "src": {
+        "type": "string",
+        "pattern": "^/(media|covers)/([A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.(webp|avif|jpg|jpeg|png|mp4|webm)$",
+        "maxLength": 200
+       },
+       "alt": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+       },
+       "kind": {
+        "enum": [
+         "image",
+         "video"
+        ]
+       },
+       "made_with_ai": {
+        "type": "boolean"
+       },
+       "caption": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+       },
+       "width": {
+        "type": "integer",
+        "minimum": 1
+       },
+       "height": {
+        "type": "integer",
+        "minimum": 1
+       },
+       "poster": {
+        "type": "string",
+        "pattern": "^/(media|covers)/([A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.(webp|avif|jpg|jpeg|png|mp4|webm)$",
+        "maxLength": 200
+       }
+      }
+     }
+    },
+    "approved_on": {
+     "type": "string",
+     "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "format": {
+     "enum": [
+      "brief",
+      "experiment",
+      "collection",
+      "howto"
+     ]
+    }
+   },
+   "required": [
+    "slug",
+    "issue_date",
+    "issue_no",
+    "desk",
+    "subtopic",
+    "kicker",
+    "title",
+    "dek",
+    "body",
+    "glossary",
+    "mentioned_entities",
+    "corrections"
+   ],
+   "additionalProperties": false
+  }
+ }
+}

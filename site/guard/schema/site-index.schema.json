@@ -1,0 +1,92 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "ai-magazine.site-index.v1",
+ "title": "호 목록",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "updated_at",
+  "latest",
+  "issues"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-magazine.site-index.v1"
+  },
+  "updated_at": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2})$"
+  },
+  "latest": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "issues": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "issue_date",
+     "issue_no",
+     "status",
+     "count",
+     "slugs"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "issue_date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+     },
+     "issue_no": {
+      "type": "integer",
+      "minimum": 1
+     },
+     "status": {
+      "enum": [
+       "published",
+       "quiet"
+      ]
+     },
+     "count": {
+      "type": "integer",
+      "minimum": 0
+     },
+     "slugs": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+       "maxLength": 80
+      }
+     },
+     "lead_title": {
+      "anyOf": [
+       {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "cover": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^/(media|covers)/([A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.(webp|avif|jpg|jpeg|png|mp4|webm)$",
+        "maxLength": 200
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    }
+   }
+  }
+ }
+}

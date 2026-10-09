@@ -1,0 +1,292 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "ai-magazine.site-config.v1",
+ "title": "사이트 설정(편집 결정 반영, null이면 임시 자리)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "updated_at",
+  "masthead",
+  "operator",
+  "bot",
+  "notices",
+  "pages"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-magazine.site-config.v1"
+  },
+  "updated_at": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2})$"
+  },
+  "masthead": {
+   "type": "object",
+   "required": [
+    "name",
+    "tagline"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "name": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 20
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "tagline": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 80
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  },
+  "operator": {
+   "type": "object",
+   "required": [
+    "nickname",
+    "handle"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "nickname": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 30
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "handle": {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^@[A-Za-z0-9_]{1,30}$"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "bio": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 200
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "links": {
+     "type": "array",
+     "maxItems": 6,
+     "items": {
+      "type": "object",
+      "required": [
+       "label",
+       "url"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "label": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 20
+       },
+       "url": {
+        "type": "string",
+        "pattern": "^https://[^\\s@]+$"
+       }
+      }
+     }
+    }
+   }
+  },
+  "bot": {
+   "type": "object",
+   "required": [
+    "name",
+    "label"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "name": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 20
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "label": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 120
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "link": {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^https://[^\\s@]+$"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  },
+  "subtopic_order": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "desk",
+     "names"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "desk": {
+      "enum": [
+       "에이전트·자동화",
+       "이미지·영상·디자인"
+      ]
+     },
+     "names": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 30
+      }
+     }
+    }
+   }
+  },
+  "notices": {
+   "type": "object",
+   "required": [
+    "ai_image",
+    "verification",
+    "newsletter"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "ai_image": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 80
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "verification": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 200
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "newsletter": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 200
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  },
+  "pages": {
+   "type": "object",
+   "required": [
+    "about",
+    "policy"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "about": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 8000
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "policy": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 8000
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "corrections_format": {
+     "anyOf": [
+      {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 200
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "name": "jupjup-daily",
+ "private": true,
+ "type": "module",
+ "scripts": {
+  "dev": "node scripts/run.mjs dev",
+  "build": "node scripts/run.mjs build",
+  "build:preview": "node scripts/run.mjs preview",
+  "preview": "astro preview --host 127.0.0.1",
+  "check": "node qa/check.mjs",
+  "build:transition": "SITE_ALLOW_TRANSITION=1 node scripts/run.mjs build"
+ },
+ "dependencies": {
+  "astro": "7.3.8",
+  "pagefind": "1.5.2",
+  "satori": "0.44.3",
+  "@resvg/resvg-js": "2.6.2",
+  "pretendard": "1.3.9"
+ }
+}

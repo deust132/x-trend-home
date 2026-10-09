@@ -1,0 +1,152 @@
+{
+ "_note": "기사 원본 package.schema.json의 site_article(object 쪽) 고정 사본.",
+ "source": "package.schema.json#site_article",
+ "source_sha256": "676fdb87de509870193b6b1197272782930fb98b3ebe31ab3fbbb26c3908e1ed",
+ "pinned_on": "2026-10-09",
+ "site_article": {
+  "type": "object",
+  "properties": {
+   "slug": {
+    "type": "string",
+    "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+    "maxLength": 80
+   },
+   "issue_date": {
+    "type": "string",
+    "format": "date"
+   },
+   "issue_no": {
+    "type": "integer",
+    "minimum": 1
+   },
+   "desk": {
+    "enum": [
+     "에이전트·자동화",
+     "이미지·영상·디자인"
+    ]
+   },
+   "subtopic": {
+    "type": "string"
+   },
+   "kicker": {
+    "type": "string"
+   },
+   "title": {
+    "type": "string"
+   },
+   "dek": {
+    "type": "string",
+    "maxLength": 160
+   },
+   "body": {
+    "type": "object",
+    "properties": {
+     "what": {
+      "type": "string"
+     },
+     "how": {
+      "type": "string"
+     },
+     "why": {
+      "type": "string"
+     },
+     "try": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "what",
+     "how",
+     "why",
+     "try"
+    ],
+    "additionalProperties": false
+   },
+   "glossary": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "term": {
+       "type": "string"
+      },
+      "definition": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "term",
+      "definition"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "mentioned_entities": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   },
+   "corrections": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "corrected_at": {
+       "type": "string",
+       "format": "date-time"
+      },
+      "text": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "corrected_at",
+      "text"
+     ],
+     "additionalProperties": false
+    }
+   }
+  },
+  "required": [
+   "slug",
+   "issue_date",
+   "issue_no",
+   "desk",
+   "subtopic",
+   "kicker",
+   "title",
+   "dek",
+   "body",
+   "glossary",
+   "mentioned_entities",
+   "corrections"
+  ],
+  "additionalProperties": false
+ },
+ "official_link": {
+  "anyOf": [
+   {
+    "type": "object",
+    "properties": {
+     "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+     },
+     "label": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "url",
+     "label"
+    ],
+    "additionalProperties": false
+   },
+   {
+    "type": "null"
+   }
+  ]
+ }
+}

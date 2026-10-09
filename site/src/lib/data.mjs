@@ -22,7 +22,7 @@ if (!transition) {
  const v1=path.resolve(process.env.SITE_V1_DIR || '../data');
  const daily=read(path.join(v1,'daily.json')), archive=read(path.join(v1,'archive.json')), insights=read(path.join(v1,'insights.json'));
  const dates=[...new Set([...archive.items.filter(i=>i.archivedAt).map(i=>i.archivedAt.slice(0,10)),daily.date])].sort();
- const used=new Set();
+ const used=new Set(), dropped=[];
  rawIssues=dates.map((date,idx)=>{
   const items=date===daily.date?daily.items:archive.items.filter(i=>i.archivedAt?.slice(0,10)===date);
   const arts=items.map((it,n)=>{
@@ -30,13 +30,16 @@ if (!transition) {
    while(used.has(slug))slug+='-x';used.add(slug);
    const body={what:'',how:'',why:'',try:''};
    for(const m of (it.detail||'').matchAll(/^## (.+?)\n([\s\S]*?)(?=^## |$(?![\s\S]))/gm)){const key={'쉬운 설명':'what','시사하는 바':'why','활용 팁':'try'}[m[1].trim()];if(key)body[key]=m[2].trim();}
+   // 상세 설명이 없는 수집본(제목·한 줄 요약뿐)은 싣지 않는다. 주소는 위에서 먼저 매겨 다른 글의 주소가 밀리지 않게 한다.
+   if(!Object.values(body).some(Boolean)){dropped.push(slug);return null;}
    if(!body.what)body.what=(it.summary||'').trim();
    const visual=['AI 미디어 생성','디자인·크리에이티브'].includes(it.category)||(['기타','Jev'].includes(it.category)&&(it.tags||[]).some(t=>['이미지생성','영상생성','디자인'].includes(t)));
    const official=/^https:\/\/(github\.com|huggingface\.co)\/[^/?#]+\/[^/?#]+\/?$/.test(it.url||'')?{url:it.url.replace(/\/$/,''),label:it.url.includes('github.com')?'GitHub 저장소':'Hugging Face 페이지'}:null;
    return {slug,issue_date:date,issue_no:idx+1,desk:visual?DESK.visual:DESK.agents,subtopic:it.category||'기타',kicker:it.category||'기타',title:it.title.trim(),dek:(it.summary||'').trim().slice(0,160),body,glossary:[],corrections:[],official_link:official,media:[]};
-  });
+  }).filter(Boolean);
   return {issue_date:date,issue_no:idx+1,articles:arts,lead:(arts.find(a=>a.body.why)||arts[0])?.slug,three_lines:date===daily.date?insights.daily.points.slice(0,3).map(p=>{const [head,...rest]=p.split(' — ');return {head:head.trim().slice(0,40),body:rest.join(' — ').trim().slice(0,240)};}):[]};
  });
+ if(dropped.length)console.warn(`전환 모드: 상세 설명이 없는 수집본 ${dropped.length}편은 싣지 않습니다(${dropped.join(', ')})`);
  config={};
 }
 // site.json 값이 null이면 확정 기본값을 쓴다(기본값도 null이면 화면이 임시 자리를 보여 준다).

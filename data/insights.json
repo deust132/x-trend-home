@@ -1,24 +1,24 @@
 {
-  "daily": {
-    "date": "2026-10-10",
-    "points": [
-      "Anthropic의 날 2탄 — Claude Managed Agents dynamic workflows 공개 베타·Claude Code Projects 대기열 전면 해제(Pro/Max 전원)·Codex composer predictions 베타가 같은 날. 코딩 에이전트 오케스트레이션 경쟁 본격화.",
-      "유출된 Claude Code 5계층 셋업 화제 — Sonnet 5.5 구축·Haiku 5.5 탐색·Opus 5.5 아키텍트·Jev 16ms 라우팅. 모델별 역할 분담이 비용 최적화의 정석으로 부상.",
-      "인프라 M&A — Cloudflare가 Deno 인수 (HN 1017pts·X 5,757 좋아요). Google AI Pro는 프리미엄 Colab 번들(A100 80GB·Ultra H100)로 구독 가치 상승.",
-      "Qwen 공세 — Qwen-Image-2.1-Turbo(8스텝 이미지 생성·편집, 오픈 웨이트)와 Qwen3.8-27B('Opus 5.5급' 주장, HF 좋아요 17,349)가 동시 화제.",
-      "Claude 스타트업 프로그램 중단 논란 — 기존 승인 건 재심사 vs OpenAI $2.5k 크레딧. 10/9 탈락 건과 같은 맥락의 후속 정황."
-    ]
-  },
-  "weekly": {
-    "week": "2026-10 W1",
-    "points": [
-      "주간 집계는 월요일에 갱신됩니다."
-    ]
-  },
-  "monthly": {
-    "month": "2026-10",
-    "points": [
-      "월간 집계는 매월 1일에 갱신됩니다."
-    ]
-  }
+ "daily": {
+  "date": "2026-10-10",
+  "points": [
+   "OpenAI Decisions API 화제 — GPT6 Luna 기반 Jev식 '시스템 1' 멀티모달. 270ms 내 이미지 분류, 천 장당 약 $0.03 (Threads 1,011 좋아요).",
+   "Google 무료 AI 노트테이커/회의록 앱 — Mac용 완전 로컬, Embedding Gemma 2 기반. 클라우드에 음성·문서를 보내지 않음 (X 1,836 좋아요·Threads 교차 검증).",
+   "REA(Reverse-Engineer Anything) — Ghidra·Hopper를 Claude Code·Codex에 연결. GitHub 4.2만★·HN 468pts·X 527 좋아요, 3개 소스 동시 화제.",
+   "Figma 공식 Chrome 확장 — 웹사이트를 편집 가능한 Figma 레이어로 복사·붙여넣기 (공식 계정, 831 좋아요).",
+   "Grok Bot 전용 이메일 선점 러시 — 봇에게 링크+원하는 이메일명으로 두 단계 발급. 아침 'Grok Bot 전용 이메일 출시' 후속."
+  ]
+ },
+ "weekly": {
+  "week": "2026-10 W1",
+  "points": [
+   "주간 집계는 월요일에 갱신됩니다."
+  ]
+ },
+ "monthly": {
+  "month": "2026-10",
+  "points": [
+   "월간 집계는 매월 1일에 갱신됩니다."
+  ]
+ }
 }

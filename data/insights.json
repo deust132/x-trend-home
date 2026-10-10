@@ -1,24 +1,24 @@
 {
- "daily": {
-  "date": "2026-10-09",
-  "points": [
-   "Anthropic의 날 — 사용 정책 변경(11/12부터 Claude 학대 금지)·Claude Dashboards·Motion 베타·Max/Team 월간 API 크레딧($100/$200/$500)·$100M Frontier Academy가 하루에 겹침. 당일 X 최대 화제군.",
-   "Claude for Startups 프로그램 화제 — $1,000 API 크레딧 + 1년 Team을 도메인 이메일(~$10)로 받는 가이드가 확산, 합격 후기 다수. AI 구독 최적화의 실질 루트.",
-   "에이전트 공세 3파전 — Grok Bot 대규모 업데이트(전용 이메일·Opus 5.5·Cursor 연동) vs Google 24/7 Gemini business agent vs Anthropic. 기업·개인 에이전트 경쟁 구도 심화.",
-   "AI 영상 품질 천장 상승 — Threads 15,786 좋아요의 5분 다크 판타지 단편('AI demo와 AI cinema의 격차 해소'), LTX-2.5 동기 오디오, uncensored 로컬 모델 Sulphur-2까지.",
-   "에이전트 인프라 지속 부상 — claude-mem 이틀 연속 GitHub 트렌딩(세션 영속 컨텍스트, Hermes 지원), mattpocock/skills, Reverse Engineer Anything(morluto/rea) X·GitHub 교차 포착."
-  ]
- },
- "weekly": {
-  "week": "2026-10 W1",
-  "points": [
-   "주간 집계는 월요일에 갱신됩니다."
-  ]
- },
- "monthly": {
-  "month": "2026-10",
-  "points": [
-   "월간 집계는 매월 1일에 갱신됩니다."
-  ]
- }
+  "daily": {
+    "date": "2026-10-10",
+    "points": [
+      "Anthropic의 날 2탄 — Claude Managed Agents dynamic workflows 공개 베타·Claude Code Projects 대기열 전면 해제(Pro/Max 전원)·Codex composer predictions 베타가 같은 날. 코딩 에이전트 오케스트레이션 경쟁 본격화.",
+      "유출된 Claude Code 5계층 셋업 화제 — Sonnet 5.5 구축·Haiku 5.5 탐색·Opus 5.5 아키텍트·Jev 16ms 라우팅. 모델별 역할 분담이 비용 최적화의 정석으로 부상.",
+      "인프라 M&A — Cloudflare가 Deno 인수 (HN 1017pts·X 5,757 좋아요). Google AI Pro는 프리미엄 Colab 번들(A100 80GB·Ultra H100)로 구독 가치 상승.",
+      "Qwen 공세 — Qwen-Image-2.1-Turbo(8스텝 이미지 생성·편집, 오픈 웨이트)와 Qwen3.8-27B('Opus 5.5급' 주장, HF 좋아요 17,349)가 동시 화제.",
+      "Claude 스타트업 프로그램 중단 논란 — 기존 승인 건 재심사 vs OpenAI $2.5k 크레딧. 10/9 탈락 건과 같은 맥락의 후속 정황."
+    ]
+  },
+  "weekly": {
+    "week": "2026-10 W1",
+    "points": [
+      "주간 집계는 월요일에 갱신됩니다."
+    ]
+  },
+  "monthly": {
+    "month": "2026-10",
+    "points": [
+      "월간 집계는 매월 1일에 갱신됩니다."
+    ]
+  }
 }
